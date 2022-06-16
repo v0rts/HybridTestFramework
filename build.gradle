@@ -145,7 +145,7 @@ dependencies {
     implementation 'org.testcontainers:localstack:1.16.3'
     implementation 'org.testcontainers:cassandra:1.16.3'
     implementation 'org.testcontainers:couchbase:1.16.3'
-    implementation 'org.testcontainers:vault:1.16.3'
+    implementation 'org.testcontainers:vault:1.17.2'
     implementation 'org.testcontainers:localstack:1.16.3'
     implementation 'org.projectlombok:lombok:1.18.22'
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
