@@ -21,6 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
+
 package com.cloud.aws;
 
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +35,6 @@ import java.io.File;
 @Slf4j
 public class S3 extends Config {
     Region region = Region.AP_SOUTHEAST_2;
-//    S3Client s3Client = SetupS3(region, "DEV");
 
     /**
      * Create Bucket

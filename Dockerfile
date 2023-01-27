@@ -1,10 +1,10 @@
 # base image
-FROM ubuntu:bionic-20220128
+FROM ubuntu:bionic-20221019
 
 LABEL maintainer="HybridTestFramework dipjyotimetia@gmail.com"
 
-ENV GRADLE_VERSION 6.9
-ENV ALLURE_VERSION 2.17.3
+ENV GRADLE_VERSION 7.5.1
+ENV ALLURE_VERSION 2.20.0
 
 # install packages
 RUN apt-get -o Acquire::Check-Valid-Until=false update
@@ -18,9 +18,9 @@ RUN wget https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.
 ENV GRADLE_HOME /opt/gradle-${GRADLE_VERSION}
 ENV PATH $PATH:$GRADLE_HOME/bin
 
-RUN echo "export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64" >> ~/.bashrc
+RUN echo "export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64" >> ~/.bashrc
 
-ENV JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
+ENV JAVA_HOME="/usr/lib/jvm/java-17-openjdk-amd64"
 ENV PATH $JAVA_HOME/bin:$PATH
 
 # Install allure
@@ -45,6 +45,12 @@ RUN FIREFOX_DOWNLOAD_URL=$(if [ $FIREFOX_VERSION = "latest" ] || [ $FIREFOX_VERS
   && mv /opt/firefox /opt/firefox-$FIREFOX_VERSION \
   && ln -fs /opt/firefox-$FIREFOX_VERSION/firefox /usr/bin/firefox
 
-#docker build -t hybridtestframework:1.0 .
-#docker tag hybridtestframework:1.0 docker.pkg.github.com/dipjyotimetia/hybridtestframewrok/hybridtestframework:1.0
-#docker push docker.pkg.github.com/dipjyotimetia/hybridtestframewrok/hybridtestframework:1.0
+WORKDIR /app
+
+COPY . .
+ADD ./scripts ./scripts
+RUN chmod +x /app/gradlew
+RUN chmod +x /app/scripts/**
+RUN gradle wrapper
+
+ENTRYPOINT ["./scripts/start.sh"]

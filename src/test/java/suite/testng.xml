@@ -1,25 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="End To End User Journey" allow-return-values="true" parallel="false" thread-count="2">
+<suite name="End To End User Journey" allow-return-values="true" thread-count="2">
     <listeners>
-        <listener class-name="com.reporting.Listeners.TestListener"/>
-        <listener class-name="com.reporting.Listeners.AnnotationTransformer"/>
+        <listener class-name="com.reporting.listeners.TestListener"/>
+        <listener class-name="com.reporting.listeners.AnnotationTransformer"/>
     </listeners>
-
-    <parameter name="grid" value="BROWSERSTACK"/> <!-- LOCAL or DOCKER or CLOUD or BROWSERSTACK-->
+    <parameter name="type" value="web"/>
+    <parameter name="grid" value="browserstack"/> <!-- LOCAL or DOCKER or CLOUD or BROWSERSTACK-->
     <parameter name="perf" value="NO"/>
 
-<!--    <test name="E2E Tests for Web">-->
-<!--        <parameter name="browser" value="chrome"/>-->
-<!--        <classes>-->
-<!--            <class name="com.TestDefinitionLayer.TC002_GURU_Login"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <!--    <test name="E2E Tests for Web">-->
+    <!--        <parameter name="browser" value="chrome"/>-->
+    <!--        <classes>-->
+    <!--            <class name="com.TestDefinitionLayer.TC002_GURU_Login"/>-->
+    <!--        </classes>-->
+    <!--    </test>-->
 
-    <test name="E2E Tests for api">
+    <test name="E2E Tests for rest api">
         <classes>
             <class name="com.TestDefinitionLayer.TC003_ApiTest"/>
-            <class name="com.TestDefinitionLayer.TC004_OpenBankTest"/>
+        </classes>
+    </test>
+
+    <test name="E2E Tests for graphql api">
+        <classes>
+            <class name="com.TestDefinitionLayer.TC004_GraphQLTest"/>
+        </classes>
+    </test>
+
+
+    <test name="E2E Tests for GRPC Api">
+        <classes>
+            <class name="com.TestDefinitionLayer.TC009_GrpcApi"/>
         </classes>
     </test>
 
@@ -36,10 +48,15 @@
         </classes>
     </test>
 
-    <test name="E2E Tests for AWS">
+<!--    <test name="E2E Tests for AWS">-->
+<!--        <classes>-->
+<!--            <class name="com.TestDefinitionLayer.TC007_AwsTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+
+    <test name="E2E Tests for GCP">
         <classes>
-            <class name="com.TestDefinitionLayer.TC007_AwsTest"/>
+            <class name="com.TestDefinitionLayer.TC010_GCPTest"/>
         </classes>
     </test>
-
 </suite>

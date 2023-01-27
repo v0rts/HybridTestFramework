@@ -21,6 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
+
 package com.security;
 
 import org.zaproxy.clientapi.core.ClientApiException;
@@ -28,7 +29,9 @@ import org.zaproxy.clientapi.core.ClientApiException;
 public interface ZapFunctionalities {
 
     void doSpidering() throws ClientApiException, InterruptedException;
+
     void doPassiveScan() throws ClientApiException, InterruptedException;
+
     void doActiveScan() throws ClientApiException, InterruptedException;
 
 }

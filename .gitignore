@@ -1,5 +1,6 @@
 .allure/**/**
 .idea/**/**
+.vscode/**/**
 .gradle/**/**
 .settings/**
 .project
@@ -11,3 +12,9 @@ allure-results/**/**
 ScreensDoc/**/**
 logs/logfile.log
 /build/
+/contract/bin
+/contract/build
+/Reports/
+
+# Mac Files
+.DS_Store

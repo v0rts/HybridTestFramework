@@ -45,6 +45,8 @@ nav:
     - Setup: setup.md
     - Selenium: selenium.md
     - Apis: api.md
+    - gRPC: grpc.md
+    - GraphQL: graphql.md
     - Kafka: kafka.md
     - AWS: aws.md
 
@@ -97,4 +99,4 @@ extra:
     - icon: fontawesome/brands/medium
       link: https://medium.com/@dipjyotimetia
 
-copyright: 2021 <a href="https://github.com/dipjyotimetia">Dipjyoti Metia</a>.
+copyright: 2022 <a href="https://github.com/dipjyotimetia">Dipjyoti Metia</a>.

@@ -21,12 +21,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
+
 package com.db;
 
-import com.api.ApiActions;
+import com.api.rest.ApiActions;
 import lombok.extern.slf4j.Slf4j;
 
-import java.sql.DriverManager;
 import java.sql.*;
 
 /**
@@ -91,7 +91,7 @@ public class DataActions extends ApiActions {
                                 continue;
                             }
                             columnName = rsmd.getColumnName(i);
-                            resultValue = rs.getString(i).toString();
+                            resultValue = rs.getString(i);
                             log.info("column name:" + columnName + "|" + "Column value:" + resultValue);
                         }
                     }
