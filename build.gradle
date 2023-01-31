@@ -34,7 +34,7 @@ ext {
     protoVersion = '3.21.12'
     containerVersion = '1.17.6'
     kafkaVersion = "3.3.1"
-    awsVersion = '2.19.24'
+    awsVersion = '2.19.26'
     ceVersion = "2.4.1"
     allureVersion= "2.20.1"
 }
@@ -121,8 +121,8 @@ dependencies {
     implementation 'io.rest-assured:rest-assured:5.3.0'
     implementation 'io.rest-assured:json-schema-validator:5.3.0'
     implementation 'io.rest-assured:json-path:5.3.0'
-    implementation 'com.atlassian.oai:swagger-request-validator-restassured:2.32.0'
-    implementation 'com.atlassian.oai:swagger-request-validator-pact:2.32.0'
+    implementation 'com.atlassian.oai:swagger-request-validator-restassured:2.32.1'
+    implementation 'com.atlassian.oai:swagger-request-validator-pact:2.32.1'
     implementation 'org.json:json:20220924'
     implementation 'com.konghq:unirest-java:3.14.1'
     implementation 'net.lightbody.bmp:browsermob-core:2.1.5'
