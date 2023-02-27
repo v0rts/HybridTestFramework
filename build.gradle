@@ -33,8 +33,8 @@ ext {
     grpcVersion = '1.53.0'
     protoVersion = '3.22.0'
     containerVersion = '1.17.6'
-    kafkaVersion = "3.3.1"
-    awsVersion = '2.20.7'
+    kafkaVersion = "7.3.2-ce"
+    awsVersion = '2.20.12'
     ceVersion = "2.4.1"
     allureVersion= "2.21.0"
 }
@@ -96,7 +96,7 @@ dependencies {
     implementation "software.amazon.awssdk:sqs:${awsVersion}"
     implementation "software.amazon.awssdk:sns:${awsVersion}"
     implementation "software.amazon.awssdk:devicefarm:${awsVersion}"
-    implementation 'com.google.cloud:google-cloud-pubsub:1.123.2'
+    implementation 'com.google.cloud:google-cloud-pubsub:1.123.4'
     implementation 'org.seleniumhq.selenium:selenium-java:4.8.1'
     implementation 'org.seleniumhq.selenium:selenium-server:4.0.0-alpha-2'
     implementation 'io.appium:java-client:8.3.0'
@@ -124,11 +124,11 @@ dependencies {
     implementation 'com.atlassian.oai:swagger-request-validator-restassured:2.33.1'
     implementation 'com.atlassian.oai:swagger-request-validator-pact:2.33.1'
     implementation 'org.json:json:20220924'
-    implementation 'com.konghq:unirest-java:3.14.1'
+    implementation 'com.konghq:unirest-java:3.14.2'
     implementation 'net.lightbody.bmp:browsermob-core:2.1.5'
     implementation 'org.zaproxy:zap-clientapi:1.11.0'
     implementation 'org.zaproxy:zap:2.12.0'
-    implementation 'net.lingala.zip4j:zip4j:2.11.4'
+    implementation 'net.lingala.zip4j:zip4j:2.11.5'
     implementation 'io.qameta.allure:allure-gradle:2.8.1'
     implementation "io.qameta.allure:allure-testng:${allureVersion}"
     implementation "io.qameta.allure:allure-rest-assured:${allureVersion}"
@@ -144,7 +144,7 @@ dependencies {
     implementation "io.cloudevents:cloudevents-api:${ceVersion}"
     implementation "io.cloudevents:cloudevents-kafka:${ceVersion}"
     implementation "io.cloudevents:cloudevents-protobuf:${ceVersion}"
-    implementation 'io.confluent:kafka-avro-serializer:7.3.1'
+    implementation 'io.confluent:kafka-avro-serializer:7.3.2'
     implementation 'cloud.localstack:localstack-utils:0.2.22'
     implementation 'com.google.guava:guava:31.1-jre'
     runtimeOnly "io.grpc:grpc-netty-shaded:${grpcVersion}"
@@ -161,9 +161,9 @@ dependencies {
     implementation "org.testcontainers:localstack:${containerVersion}"
     implementation "org.testcontainers:gcloud:${containerVersion}"
     implementation 'org.projectlombok:lombok:1.18.26'
-    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.26'
     implementation 'com.typesafe:config:1.4.2'
-    implementation 'org.apache.logging.log4j:log4j-core:2.19.0'
+    implementation 'org.apache.logging.log4j:log4j-core:2.20.0'
 }
 
 // https://github.com/DiUS/java-faker/issues/327#issuecomment-1091166953
