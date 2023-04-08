@@ -21,7 +21,7 @@ SOFTWARE.
 package com.TestDefinitionLayer;
 
 import com.core.MobileActions;
-import com.pages.mobile.HomePage;
+import com.pages.mobile.SauceHomePage;
 import com.reporting.extentreport.ExtentTestManager;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Link;
@@ -29,17 +29,17 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.Test;
 
-public class TC_Test_AndroidBooking extends MobileActions {
+public class TC011_AndroidBooking extends MobileActions {
 
     @Link("Test")
     @Feature("test")
     @Severity(SeverityLevel.CRITICAL)
     @Test(description = "Demo Test")
-    public void E2E_TestAndroid_Bookings() {
+    public void TestAndroidBookings() {
 
         String TCname = "TC_Test_AndroidBooking";
 
-        HomePage homePage = new HomePage();
+        SauceHomePage homePage = new SauceHomePage();
 
 //        ExtentTestManager.getTest().setDescription("Search for bookings");
 

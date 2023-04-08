@@ -21,14 +21,17 @@ SOFTWARE.
 package com.pages.mobile;
 
 import com.core.MobileActions;
-import io.appium.java_client.pagefactory.*;
+import io.appium.java_client.pagefactory.AndroidFindBy;
+import io.appium.java_client.pagefactory.iOSXCUITBy;
+import io.appium.java_client.pagefactory.iOSXCUITFindBy;
+import io.appium.java_client.pagefactory.iOSXCUITFindBys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
 /**
  * @author Dipjyoti Metia
  */
-public class LoginPage extends MobileActions {
+public class SauceLoginPage extends MobileActions {
 
     @iOSXCUITFindBys(value = {@iOSXCUITBy(accessibility = "test-Username"), @iOSXCUITBy(xpath = "//XCUIElementTypeTextField[@name=\"test-Username\"]")})
     @AndroidFindBy(accessibility = "test-Username")
@@ -42,9 +45,9 @@ public class LoginPage extends MobileActions {
     @AndroidFindBy(accessibility = "test-LOGIN")
     private WebElement loginButton;
 
-    public LoginPage() {
+    public SauceLoginPage() {
         super();
-        PageFactory.initElements(new AppiumFieldDecorator(mobileThread), this);
+        PageFactory.initElements(driverThread, this);
     }
 
     public void login() {

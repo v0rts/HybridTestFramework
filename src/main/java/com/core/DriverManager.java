@@ -26,17 +26,14 @@ package com.core;
 
 
 import com.config.AppConfig;
-import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.WebDriver;
 
 public class DriverManager extends DriverController {
     public AppConfig appConfig;
     public WebDriver driverThread;
-    public AppiumDriver mobileThread;
 
     public DriverManager() {
         this.appConfig = super.getAppConfig();
         this.driverThread = super.getWebDriver();
-        this.mobileThread = super.getMobileDriver();
     }
 }

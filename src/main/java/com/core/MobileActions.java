@@ -27,9 +27,7 @@ package com.core;
 import com.csvreader.CsvReader;
 import com.csvreader.CsvWriter;
 import com.github.javafaker.Faker;
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Ordering;
-import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.AppiumFluentWait;
 import io.appium.java_client.android.*;
 import io.appium.java_client.android.connection.ConnectionState;
@@ -49,7 +47,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
@@ -82,7 +80,7 @@ public class MobileActions extends DriverManager {
      * @param name Screen name
      */
     protected void captureScreen(String name) throws Exception {
-        File file = ((TakesScreenshot) mobileThread).getScreenshotAs(OutputType.FILE.FILE);
+        File file = ((TakesScreenshot) driverThread).getScreenshotAs(OutputType.FILE.FILE);
         String dest = System.getProperty("user.dir") + "\\Screenshots\\" + name + ".png";
         FileUtils.copyFile(file, new File(dest));
     }
@@ -95,7 +93,7 @@ public class MobileActions extends DriverManager {
      * @throws IOException exception
      */
     private String capture(String screenShotName) throws IOException {
-        TakesScreenshot ts = mobileThread;
+        TakesScreenshot ts = (TakesScreenshot) driverThread;
         File source = ts.getScreenshotAs(OutputType.FILE);
         String dest = System.getProperty("user.dir") + "\\Reports\\Screens\\" + screenShotName + ".png";
         File destination = new File(dest);
@@ -110,7 +108,7 @@ public class MobileActions extends DriverManager {
      * @param timeout timeoutInMilli
      */
     private void fluentWait(WebElement element, int timeout) {
-        Wait<AppiumDriver> wait = new AppiumFluentWait<>(mobileThread)
+        FluentWait<WebDriver> wait = new AppiumFluentWait<>(driverThread)
                 .withTimeout(Duration.ofSeconds(timeout))
                 .pollingEvery(Duration.ofMillis(5))
                 .ignoring(NoSuchElementException.class);
@@ -127,10 +125,10 @@ public class MobileActions extends DriverManager {
     private By getWebElementBy(String byElement, MobileBy mobileBy) {
         By by = null;
         switch (mobileBy) {
-            case ID -> by = (By) mobileThread.findElement(By.id(byElement));
-            case XPATH -> by = (By) mobileThread.findElement(By.xpath(byElement));
-            case NAME -> by = (By) mobileThread.findElement(By.name(byElement));
-            case CLASS -> by = (By) mobileThread.findElement(By.className(byElement));
+            case ID -> by = (By) driverThread.findElement(By.id(byElement));
+            case XPATH -> by = (By) driverThread.findElement(By.xpath(byElement));
+            case NAME -> by = (By) driverThread.findElement(By.name(byElement));
+            case CLASS -> by = (By) driverThread.findElement(By.className(byElement));
             default -> log.info("no default element selected");
         }
         return by;
@@ -147,10 +145,10 @@ public class MobileActions extends DriverManager {
     private WebElement getWebElement(String mobileElement, MobileBy mobileBy) throws Exception {
         WebElement element = null;
         switch (mobileBy) {
-            case XPATH -> element = mobileThread.findElement(By.xpath(mobileElement));
-            case ID -> element = mobileThread.findElement(By.id(mobileElement));
-            case NAME -> element = mobileThread.findElement(By.name(mobileElement));
-            case CLASS -> element = mobileThread.findElement(By.className(mobileElement));
+            case XPATH -> element = driverThread.findElement(By.xpath(mobileElement));
+            case ID -> element = driverThread.findElement(By.id(mobileElement));
+            case NAME -> element = driverThread.findElement(By.name(mobileElement));
+            case CLASS -> element = driverThread.findElement(By.className(mobileElement));
             default -> log.info("Element type not found");
         }
         if (element == null) {
@@ -164,7 +162,7 @@ public class MobileActions extends DriverManager {
      *
      * @param element element
      */
-    protected void click(WebElement element) {
+    public void click(WebElement element) {
         try {
             fluentWait(element, 10);
             element.click();
@@ -206,7 +204,7 @@ public class MobileActions extends DriverManager {
      * @param element element
      * @param value   value
      */
-    protected void enter(WebElement element, String value) {
+    public void enter(WebElement element, String value) {
         try {
             fluentWait(element, 10);
             element.click();
@@ -239,10 +237,10 @@ public class MobileActions extends DriverManager {
     private WebElement getMobileElement(String mobileElement, MobileBy mobileBy) throws Exception {
         WebElement element = null;
         switch (mobileBy) {
-            case XPATH -> element = mobileThread.findElement(By.xpath(mobileElement));
-            case ID -> element = mobileThread.findElement(By.id(mobileElement));
-            case NAME -> element = mobileThread.findElement(By.name(mobileElement));
-            case CLASS -> element = mobileThread.findElement(By.className(mobileElement));
+            case XPATH -> element = driverThread.findElement(By.xpath(mobileElement));
+            case ID -> element = driverThread.findElement(By.id(mobileElement));
+            case NAME -> element = driverThread.findElement(By.name(mobileElement));
+            case CLASS -> element = driverThread.findElement(By.className(mobileElement));
             default -> log.info("Element type not found");
         }
         if (element == null) {
@@ -262,10 +260,10 @@ public class MobileActions extends DriverManager {
     private By getMobileElementBy(String byElement, MobileBy mobileBy) {
         By by = null;
         switch (mobileBy) {
-            case ID -> by = (By) mobileThread.findElement(By.id(byElement));
-            case XPATH -> by = (By) mobileThread.findElement(By.xpath(byElement));
-            case NAME -> by = (By) mobileThread.findElement(By.name(byElement));
-            case CLASS -> by = (By) mobileThread.findElement(By.className(byElement));
+            case ID -> by = (By) driverThread.findElement(By.id(byElement));
+            case XPATH -> by = (By) driverThread.findElement(By.xpath(byElement));
+            case NAME -> by = (By) driverThread.findElement(By.name(byElement));
+            case CLASS -> by = (By) driverThread.findElement(By.className(byElement));
             default -> log.info("no default element selected");
         }
         return by;
@@ -327,19 +325,19 @@ public class MobileActions extends DriverManager {
         boolean returnValue = false;
         switch (elementType) {
             case XPATH:
-                if (mobileThread.findElements(By.xpath(element)).size() != 0) {
+                if (driverThread.findElements(By.xpath(element)).size() != 0) {
                     log.info(element + ": element is exists");
                     returnValue = true;
                     break;
                 }
             case ID:
-                if (mobileThread.findElements(By.id(element)).size() != 0) {
+                if (driverThread.findElements(By.id(element)).size() != 0) {
                     log.info(element + ": element is exists");
                     returnValue = true;
                     break;
                 }
             case CLASS:
-                if (mobileThread.findElements(By.className(element)).size() != 0) {
+                if (driverThread.findElements(By.className(element)).size() != 0) {
                     log.info(element + ": element is exists");
                     returnValue = true;
                     break;
@@ -372,7 +370,7 @@ public class MobileActions extends DriverManager {
      * @return pageSource
      */
     public String getPageSource() {
-        return mobileThread.getPageSource();
+        return driverThread.getPageSource();
     }
 
 
@@ -393,7 +391,7 @@ public class MobileActions extends DriverManager {
      * @return text
      */
     public String getTextContent(String containText) {
-        return mobileThread.findElement(By.xpath("//*[contains(text(),'" + containText + "')]")).getText();
+        return driverThread.findElement(By.xpath("//*[contains(text(),'" + containText + "')]")).getText();
     }
 
     /**
@@ -403,7 +401,7 @@ public class MobileActions extends DriverManager {
      * @return boolean
      */
     public boolean isTextPresent(String containsText) throws Exception {
-        if (mobileThread.getPageSource().contains(containsText)) {
+        if (driverThread.getPageSource().contains(containsText)) {
             return true;
         } else {
             log.error("Text is not present");
@@ -418,10 +416,10 @@ public class MobileActions extends DriverManager {
      */
     public void networkSpeedAndroid(String networkSpeed) {
         switch (networkSpeed) {
-            case "FULL" -> ((AndroidDriver) mobileThread).setNetworkSpeed(NetworkSpeed.FULL);
-            case "GPRS" -> ((AndroidDriver) mobileThread).setNetworkSpeed(NetworkSpeed.GPRS);
-            case "HSDPA" -> ((AndroidDriver) mobileThread).setNetworkSpeed(NetworkSpeed.HSDPA);
-            case "LTE" -> ((AndroidDriver) mobileThread).setNetworkSpeed(NetworkSpeed.LTE);
+            case "FULL" -> ((AndroidDriver) driverThread).setNetworkSpeed(NetworkSpeed.FULL);
+            case "GPRS" -> ((AndroidDriver) driverThread).setNetworkSpeed(NetworkSpeed.GPRS);
+            case "HSDPA" -> ((AndroidDriver) driverThread).setNetworkSpeed(NetworkSpeed.HSDPA);
+            case "LTE" -> ((AndroidDriver) driverThread).setNetworkSpeed(NetworkSpeed.LTE);
             default -> log.info("network speed not available");
         }
     }
@@ -433,9 +431,9 @@ public class MobileActions extends DriverManager {
      */
     public void signalStrengthAndroid(String signalStrength) {
         switch (signalStrength) {
-            case "GREAT" -> ((AndroidDriver) mobileThread).setGsmSignalStrength(GsmSignalStrength.GREAT);
-            case "MODERATE" -> ((AndroidDriver) mobileThread).setGsmSignalStrength(GsmSignalStrength.MODERATE);
-            case "NONE" -> ((AndroidDriver) mobileThread).setGsmSignalStrength(GsmSignalStrength.NONE_OR_UNKNOWN);
+            case "GREAT" -> ((AndroidDriver) driverThread).setGsmSignalStrength(GsmSignalStrength.GREAT);
+            case "MODERATE" -> ((AndroidDriver) driverThread).setGsmSignalStrength(GsmSignalStrength.MODERATE);
+            case "NONE" -> ((AndroidDriver) driverThread).setGsmSignalStrength(GsmSignalStrength.NONE_OR_UNKNOWN);
             default -> log.info("Signal Strength not available");
         }
     }
@@ -447,9 +445,9 @@ public class MobileActions extends DriverManager {
      */
     public void voiceStateAndroid(String voiceState) {
         switch (voiceState) {
-            case "UNREGISTERED" -> ((AndroidDriver) mobileThread).setGsmVoice(GsmVoiceState.UNREGISTERED);
-            case "ROAMING" -> ((AndroidDriver) mobileThread).setGsmVoice(GsmVoiceState.ROAMING);
-            case "SEARCHING" -> ((AndroidDriver) mobileThread).setGsmVoice(GsmVoiceState.SEARCHING);
+            case "UNREGISTERED" -> ((AndroidDriver) driverThread).setGsmVoice(GsmVoiceState.UNREGISTERED);
+            case "ROAMING" -> ((AndroidDriver) driverThread).setGsmVoice(GsmVoiceState.ROAMING);
+            case "SEARCHING" -> ((AndroidDriver) driverThread).setGsmVoice(GsmVoiceState.SEARCHING);
             default -> log.info("Voice state not available");
         }
     }
@@ -461,8 +459,8 @@ public class MobileActions extends DriverManager {
      */
     public void powerStateAndroid(String powerState) {
         switch (powerState) {
-            case "ON" -> ((AndroidDriver) mobileThread).setPowerAC(PowerACState.ON);
-            case "OFF" -> ((AndroidDriver) mobileThread).setPowerAC(PowerACState.OFF);
+            case "ON" -> ((AndroidDriver) driverThread).setPowerAC(PowerACState.ON);
+            case "OFF" -> ((AndroidDriver) driverThread).setPowerAC(PowerACState.OFF);
             default -> log.info("Voice state not available");
         }
     }
@@ -477,21 +475,21 @@ public class MobileActions extends DriverManager {
         switch (connectionState) {
             case "AIRPLANE" -> {
                 if (enabled) {
-                    ((AndroidDriver) mobileThread).setConnection(new ConnectionState(ConnectionState.AIRPLANE_MODE_MASK)).isAirplaneModeEnabled();
+                    ((AndroidDriver) driverThread).setConnection(new ConnectionState(ConnectionState.AIRPLANE_MODE_MASK)).isAirplaneModeEnabled();
                 }
-                ((AndroidDriver) mobileThread).setConnection(new ConnectionState(ConnectionState.AIRPLANE_MODE_MASK));
+                ((AndroidDriver) driverThread).setConnection(new ConnectionState(ConnectionState.AIRPLANE_MODE_MASK));
             }
             case "DATA" -> {
                 if (enabled) {
-                    ((AndroidDriver) mobileThread).setConnection(new ConnectionState(ConnectionState.DATA_MASK)).isDataEnabled();
+                    ((AndroidDriver) driverThread).setConnection(new ConnectionState(ConnectionState.DATA_MASK)).isDataEnabled();
                 }
-                ((AndroidDriver) mobileThread).setConnection(new ConnectionState(ConnectionState.DATA_MASK));
+                ((AndroidDriver) driverThread).setConnection(new ConnectionState(ConnectionState.DATA_MASK));
             }
             case "WIFI" -> {
                 if (enabled) {
-                    ((AndroidDriver) mobileThread).setConnection(new ConnectionState(ConnectionState.WIFI_MASK)).isWiFiEnabled();
+                    ((AndroidDriver) driverThread).setConnection(new ConnectionState(ConnectionState.WIFI_MASK)).isWiFiEnabled();
                 }
-                ((AndroidDriver) mobileThread).setConnection(new ConnectionState(ConnectionState.WIFI_MASK));
+                ((AndroidDriver) driverThread).setConnection(new ConnectionState(ConnectionState.WIFI_MASK));
             }
             default -> log.info("Connection state not available");
         }
@@ -501,7 +499,7 @@ public class MobileActions extends DriverManager {
      * Press Back
      */
     public void pressBackAndroid() {
-        ((AndroidDriver) mobileThread).pressKey(new KeyEvent(AndroidKey.BACK));
+        ((AndroidDriver) driverThread).pressKey(new KeyEvent(AndroidKey.BACK));
         log.info("Press Back");
     }
 
@@ -509,7 +507,7 @@ public class MobileActions extends DriverManager {
      * Shake Device
      */
     public void shakeDeviceIos() {
-        ((IOSDriver) mobileThread).shake();
+        ((IOSDriver) driverThread).shake();
         log.info("Shake Device");
     }
 
@@ -517,40 +515,8 @@ public class MobileActions extends DriverManager {
      * Press Back
      */
     public void setKeyboardCorrectionIos(boolean bool) {
-        ((IOSDriver) mobileThread).setKeyboardAutocorrection(bool);
+        ((IOSDriver) driverThread).setKeyboardAutocorrection(bool);
         log.info("Shake Device");
-    }
-
-    /**
-     * Swipe Down
-     */
-    public void swipeDown() {
-        mobileThread.executeScript("scroll", ImmutableMap.of("direction", "down"));
-        log.info("Swipe Down");
-    }
-
-    /**
-     * Swipe Up
-     */
-    public void swipeUP() {
-        mobileThread.executeScript("scroll", ImmutableMap.of("direction", "up"));
-        log.info("Swipe Up");
-    }
-
-    /**
-     * Accept Alert
-     */
-    public void acceptAlert() {
-        mobileThread.executeScript("acceptAlert");
-        log.info("Accept Alert");
-    }
-
-    /**
-     * Dismiss Alert
-     */
-    public void dismissAlert() {
-        mobileThread.executeScript("dismissAlert");
-        log.info("Dismiss Alert");
     }
 
     /**
@@ -580,7 +546,7 @@ public class MobileActions extends DriverManager {
     protected String getTextByXpath(String element) {
         try {
             String value;
-            value = mobileThread.findElement(By.xpath(element)).getText();
+            value = driverThread.findElement(By.xpath(element)).getText();
             return value;
         } catch (ElementNotInteractableException e) {
             log.error("Element not visible", e);
@@ -614,7 +580,7 @@ public class MobileActions extends DriverManager {
      */
     public void scrollToLocation(WebElement element, int value) {
         try {
-            JavascriptExecutor js = mobileThread;
+            JavascriptExecutor js = (JavascriptExecutor) driverThread;
             HashMap<String, Double> scrollElement = new HashMap<String, Double>();
             scrollElement.put("startX", 0.50);
             scrollElement.put("startY", 0.95);
@@ -631,7 +597,7 @@ public class MobileActions extends DriverManager {
      * Click on back button
      */
     public void clickBackButton() {
-        mobileThread.navigate().back(); //Closes keyboard
+        driverThread.navigate().back(); //Closes keyboard
     }
 
     /**
@@ -665,7 +631,7 @@ public class MobileActions extends DriverManager {
      * @return point
      */
     public Point getCoordinates(String byId) {
-        WebElement element = mobileThread.findElement(By.id(byId));
+        WebElement element = driverThread.findElement(By.id(byId));
         Point location = element.getLocation();
         System.out.println(location);
         return location;
@@ -677,7 +643,7 @@ public class MobileActions extends DriverManager {
      * @param id locatorId
      */
     public void waitForElementToDisAppear(String id) {
-        WebDriverWait wait = new WebDriverWait(mobileThread, Duration.ofSeconds(25));
+        WebDriverWait wait = new WebDriverWait(driverThread, Duration.ofSeconds(25));
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id(id)));
     }
 
@@ -1000,7 +966,7 @@ public class MobileActions extends DriverManager {
     public void captureImage(String p_testcaseName) {
         try {
             counter = counter + 1;
-            File src = ((TakesScreenshot) mobileThread).getScreenshotAs(OutputType.FILE);
+            File src = ((TakesScreenshot) driverThread).getScreenshotAs(OutputType.FILE);
             FileUtils.copyFile(src, new File(("ScreensDoc\\" + p_testcaseName + "\\" + datetimeabc + "\\" + counter + ".png")));
         } catch (Exception e) {
             log.error("Capture screenShot failed", e);
@@ -1099,7 +1065,7 @@ public class MobileActions extends DriverManager {
      * @param id locatorId
      */
     private void waitForPageToLoad(WebElement id) {
-        WebDriverWait wait = new WebDriverWait(mobileThread, Duration.ofSeconds(35));
+        WebDriverWait wait = new WebDriverWait(driverThread, Duration.ofSeconds(35));
         wait.until((Function<? super WebDriver, ?>) ExpectedConditions.elementToBeClickable(id));
     }
 

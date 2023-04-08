@@ -26,6 +26,7 @@ package com.core;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.SystemUtils;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -40,6 +41,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -104,14 +106,14 @@ abstract class WebOptions extends MobileOptions {
      */
     protected EdgeOptions getEdgeOptions() {
 //        WebDriverManager.edgedriver().setup();
-        ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.setHeadless(true);
-        chromeOptions.setPageLoadStrategy(PageLoadStrategy.NONE);
-        chromeOptions.addArguments("--ignore-certificate-errors");
-        chromeOptions.addArguments("--disable-popup-blocking");
-        chromeOptions.setBinary(
-                "C:\\Program Files (x86)\\Microsoft\\Edge Dev\\Application\\msedge.exe");
-        return new EdgeOptions().merge(chromeOptions);
+        EdgeOptions edgeOptions = new EdgeOptions();
+        edgeOptions.setHeadless(true);
+        edgeOptions.setPageLoadStrategy(PageLoadStrategy.NONE);
+        edgeOptions.addArguments("--ignore-certificate-errors");
+        edgeOptions.addArguments("--disable-popup-blocking");
+        edgeOptions.addArguments("--headless=new");
+        edgeOptions.setBinary("C:\\Program Files (x86)\\Microsoft\\Edge Dev\\Application\\msedge.exe");
+        return new EdgeOptions().merge(edgeOptions);
     }
 
     /**
@@ -147,19 +149,19 @@ abstract class WebOptions extends MobileOptions {
         switch (browser) {
             case "chrome" -> {
                 capabilities.setCapability("browserName", "chrome");
-                capabilities.setCapability("browserVersion", "90");
+                capabilities.setCapability("browserVersion", "latest");
                 capabilities.setCapability("platform", "windows");
                 log.info("Adding aws chrome capabilities");
             }
             case "firefox" -> {
                 capabilities.setCapability("browserName", "firefox");
-                capabilities.setCapability("browserVersion", "88");
+                capabilities.setCapability("browserVersion", "latest");
                 capabilities.setCapability("platform", "windows");
                 log.info("Adding aws firefox capabilities");
             }
             case "edge" -> {
                 capabilities.setCapability("browserName", "edge");
-                capabilities.setCapability("browserVersion", "90");
+                capabilities.setCapability("browserVersion", "latest");
                 capabilities.setCapability("platform", "windows");
                 log.info("Adding aws firefox capabilities");
             }
@@ -169,29 +171,78 @@ abstract class WebOptions extends MobileOptions {
     }
 
     /**
-     * Add browserstack capabilities
+     * Add browser stack capabilities
+     *
+     * @param browser  browser
+     * @param testName test name
+     * @return capabilities
      */
     protected DesiredCapabilities addBrowserStackCapabilities(String browser, String testName) {
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("os", "Windows");
-        capabilities.setCapability("os_version", "10");
-        capabilities.setCapability("build", "HybridTestFramework");
-        capabilities.setCapability("name", testName);
+        HashMap<String, Object> browserStackOptions = new HashMap<>();
+        browserStackOptions.put("os", "Windows");
+        browserStackOptions.put("osVersion", "11");
+        browserStackOptions.put("projectName", "HybridTestFramework");
+        browserStackOptions.put("buildName", "BUILD_NAME");
+        browserStackOptions.put("sessionName", testName);
+        browserStackOptions.put("local", "false");
+        browserStackOptions.put("debug", "false");
+        browserStackOptions.put("consoleLogs", "info");
+        browserStackOptions.put("networkLogs", "true");
+        browserStackOptions.put("seleniumCdp", true);
+        //browserStackOptions.put("local", "true");
         switch (browser) {
             case "chrome" -> {
-                capabilities.setCapability("browser", "Chrome");
-                capabilities.setCapability("browser_version", "90.0");
+                capabilities.setCapability("browserName", "Chrome");
+                capabilities.setCapability("browserVersion", "latest");
             }
             case "firefox" -> {
-                capabilities.setCapability("browser", "Firefox");
-                capabilities.setCapability("browser_version", "88.0");
+                capabilities.setCapability("browserName", "Firefox");
+                capabilities.setCapability("browserVersion", "latest");
             }
             case "edge" -> {
-                capabilities.setCapability("browser", "Edge");
-                capabilities.setCapability("browser_version", "90.0");
+                capabilities.setCapability("browserName", "Edge");
+                capabilities.setCapability("browserVersion", "latest");
             }
             default -> log.info("browser selection is required");
         }
+        capabilities.setCapability("bstack:options", browserStackOptions);
+        return capabilities;
+    }
+
+    /**
+     * Add browser stack capabilities
+     *
+     * @param browser  browser
+     * @param testName test name
+     * @return capabilities
+     */
+    protected Capabilities addLambdaTestCapabilities(String browser, String testName) {
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        HashMap<String, Object> ltOptions = new HashMap<>();
+        ltOptions.put("seCdp", true);
+        ltOptions.put("project", "HybridTestFramework");
+        ltOptions.put("name", testName);
+        ltOptions.put("selenium_version", "4.8.0");
+        switch (browser) {
+            case "chrome" -> {
+                ChromeOptions browserOptions = new ChromeOptions();
+                browserOptions.setPlatformName("Windows 11");
+                browserOptions.setBrowserVersion("111.0");
+            }
+            case "firefox" -> {
+                FirefoxOptions browserOptions = new FirefoxOptions();
+                browserOptions.setPlatformName("Windows 11");
+                browserOptions.setBrowserVersion("latest");
+            }
+            case "edge" -> {
+                EdgeOptions browserOptions = new EdgeOptions();
+                browserOptions.setPlatformName("Windows 11");
+                browserOptions.setBrowserVersion("latest");
+            }
+            default -> log.info("browser selection is required");
+        }
+        capabilities.setCapability("LT:Options", ltOptions);
         return capabilities;
     }
 

@@ -26,7 +26,6 @@ package com.utils;
 
 import lombok.extern.slf4j.Slf4j;
 import net.lingala.zip4j.ZipFile;
-import net.lingala.zip4j.exception.ZipException;
 import org.apache.commons.io.FileUtils;
 import org.testng.Assert;
 
@@ -86,9 +85,8 @@ public class FileSystem {
      * Delete file path.
      *
      * @param path Path to file for folder.
-     * @throws IOException When fail to delete it.
      */
-    public void deletePath(String path) throws IOException {
+    public void deletePath(String path) {
         try {
             File file = new File(path);
             if (file.isDirectory()) {

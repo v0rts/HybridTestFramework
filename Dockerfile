@@ -1,14 +1,14 @@
 # base image
-FROM ubuntu:bionic-20221019
+FROM ubuntu:bionic-20230308
 
 LABEL maintainer="HybridTestFramework dipjyotimetia@gmail.com"
 
-ENV GRADLE_VERSION 7.5.1
-ENV ALLURE_VERSION 2.20.0
+ENV GRADLE_VERSION 8.0.2
+ENV ALLURE_VERSION 2.21.0
 
 # install packages
 RUN apt-get -o Acquire::Check-Valid-Until=false update
-RUN apt-get install -y openjdk-11-jdk vim wget curl zip unzip git python-pip python-dev build-essential
+RUN apt-get install -y openjdk-17-jdk vim wget curl zip unzip git python-pip python-dev build-essential
 
 # Install Gradle
 RUN wget https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip && \
